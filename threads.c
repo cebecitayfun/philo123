@@ -20,10 +20,10 @@ int	check_philo_state(t_philo *philo, int *finished_eating)
 	if (get_current_time() - philo->last_meal > philo->time_to_die)
 	{
 		pthread_mutex_unlock(philo->meal_lock);
-		print_message("died", philo, philo->id);
 		pthread_mutex_lock(philo->dead_lock);
 		*philo->dead = 1;
 		pthread_mutex_unlock(philo->dead_lock);
+		print_message("died", philo, philo->id);
 		return (1);
 	}
 	if (philo->num_times_to_eat != -1
