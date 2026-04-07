@@ -33,6 +33,19 @@ int	check_philo_state(t_philo *philo, int *finished_eating)
 	return (0);
 }
 
+int	check_all_ate(t_philo *philos, int finished_eating)
+{
+	if (philos[0].num_times_to_eat != -1
+		&& finished_eating == philos[0].num_of_philos)
+	{
+		pthread_mutex_lock(philos[0].dead_lock);
+		*philos[0].dead = 1;
+		pthread_mutex_unlock(philos[0].dead_lock);
+		return (1);
+	}
+	return (0);
+}
+
 void	*monitor_routine(void *pointer)
 {
 	t_philo	*philos;
@@ -50,14 +63,8 @@ void	*monitor_routine(void *pointer)
 			if (check_philo_state(&philos[i], &finished_eating))
 				return (NULL);
 		}
-		if (philos[0].num_times_to_eat != -1
-			&& finished_eating == philos[0].num_of_philos)
-		{
-			pthread_mutex_lock(philos[0].dead_lock);
-			*philos[0].dead = 1;
-			pthread_mutex_unlock(philos[0].dead_lock);
+		if (check_all_ate(philos, finished_eating))
 			return (NULL);
-		}
 		ft_usleep(1);
 	}
 	return (pointer);

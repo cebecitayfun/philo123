@@ -20,13 +20,8 @@ int	check_arg_content(char **argv)
 	return (0);
 }
 
-int	main(int argc, char **argv)
+int	validate_args(int argc, char **argv)
 {
-	t_program		program;
-	t_philo			philos[200];
-	pthread_mutex_t	forks[200];
-	int				k;
-
 	if (argc != 5 && argc != 6)
 		return (write(2, "Wrong argument count\n", 21), 1);
 	if (check_arg_content(argv) == 1)
@@ -36,6 +31,18 @@ int	main(int argc, char **argv)
 		|| ft_atoi(argv[4]) <= 0
 		|| (argv[5] && ft_atoi(argv[5]) <= 0))
 		return (write(2, "Invalid arguments\n", 18), 1);
+	return (0);
+}
+
+int	main(int argc, char **argv)
+{
+	t_program		program;
+	t_philo			philos[200];
+	pthread_mutex_t	forks[200];
+	int				k;
+
+	if (validate_args(argc, argv))
+		return (1);
 	init_program(philos, &program);
 	init_forks(forks, ft_atoi(argv[1]));
 	init_philos(philos, &program, forks, argv);

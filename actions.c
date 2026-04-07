@@ -23,20 +23,27 @@ void	print_message(char *str, t_philo *philo, int id)
 	pthread_mutex_unlock(philo->write_lock);
 }
 
+void	handle_single_philo(t_philo *philo)
+{
+	pthread_mutex_lock(philo->r_fork);
+	print_message("has taken a fork", philo, philo->id);
+	ft_usleep(philo->time_to_die);
+	while (!check_if_dead(philo))
+		ft_usleep(1);
+	pthread_mutex_unlock(philo->r_fork);
+}
+
 void	take_forks(t_philo *philo)
 {
+	if (philo->num_of_philos == 1)
+	{
+		handle_single_philo(philo);
+		return ;
+	}
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(philo->r_fork);
 		print_message("has taken a fork", philo, philo->id);
-		if (philo->num_of_philos == 1)
-		{
-			ft_usleep(philo->time_to_die);
-			while (!check_if_dead(philo))
-				ft_usleep(1);
-			pthread_mutex_unlock(philo->r_fork);
-			return ;
-		}
 		pthread_mutex_lock(philo->l_fork);
 		print_message("has taken a fork", philo, philo->id);
 	}
@@ -44,12 +51,6 @@ void	take_forks(t_philo *philo)
 	{
 		pthread_mutex_lock(philo->l_fork);
 		print_message("has taken a fork", philo, philo->id);
-		if (philo->num_of_philos == 1)
-		{
-			ft_usleep(philo->time_to_die * 2);
-			pthread_mutex_unlock(philo->l_fork);
-			return ;
-		}
 		pthread_mutex_lock(philo->r_fork);
 		print_message("has taken a fork", philo, philo->id);
 	}
