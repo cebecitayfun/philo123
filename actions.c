@@ -76,4 +76,9 @@ void	eat_sleep_think(t_philo *philo)
 	print_message("is sleeping", philo, philo->id);
 	ft_usleep(philo->time_to_sleep);
 	print_message("is thinking", philo, philo->id);
+	if (philo->num_of_philos % 2 != 0)
+	{
+		if (philo->time_to_eat * 2 > philo->time_to_sleep)
+			ft_usleep(philo->time_to_eat * 2 - philo->time_to_sleep);
+	}
 }
