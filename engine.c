@@ -75,7 +75,8 @@ int	launch_simulation(t_program *program, pthread_mutex_t *forks)
 	pthread_t	observer;
 	int			i;
 
-	if (pthread_create(&observer, NULL, &supervisor_cycle, program->philos) != 0)
+	if (pthread_create(&observer, NULL, &supervisor_cycle,
+			program->philos) != 0)
 		cleanup_resources("Thread creation error", program, forks);
 	i = 0;
 	while (i < program->philos[0].num_of_philos)

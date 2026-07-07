@@ -23,8 +23,8 @@ void	assign_philo_parameters(t_philo *philo, char **argv)
 		philo->num_times_to_eat = -1;
 }
 
-void	setup_philosophers(t_philo *philos, t_program *program, pthread_mutex_t *forks,
-		char **argv)
+void	setup_philosophers(t_philo *philos, t_program *program,
+		pthread_mutex_t *forks, char **argv)
 {
 	int	i;
 	int	philo_num;

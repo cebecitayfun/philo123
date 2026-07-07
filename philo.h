@@ -47,8 +47,8 @@ typedef struct s_program
 int		verify_input_digits(char **argv);
 void	setup_simulation(t_philo *philos, t_program *program);
 void	setup_forks(pthread_mutex_t *forks, int philo_num);
-void	setup_philosophers(t_philo *philos, t_program *program, pthread_mutex_t *forks,
-			char **argv);
+void	setup_philosophers(t_philo *philos, t_program *program,
+			pthread_mutex_t *forks, char **argv);
 
 int		launch_simulation(t_program *program, pthread_mutex_t *forks);
 void	*philosopher_cycle(void *pointer);
@@ -63,7 +63,8 @@ void	precise_sleep(size_t milliseconds);
 
 int		ascii_to_int(char *str);
 size_t	get_timestamp(void);
-void	cleanup_resources(char *str, t_program *program, pthread_mutex_t *forks);
+void	cleanup_resources(char *str, t_program *program,
+			pthread_mutex_t *forks);
 int		str_length(char *str);
 
 #endif
