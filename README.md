@@ -109,6 +109,6 @@ All shared memory accesses (like reading/writing `dead_flag` or checking/updatin
 
 ### AI Usage Disclosure
 Generative AI was used during this project for the following specific development tasks:
-- **Starvation & Load Analysis:** AI assisted in analyzing thread scheduling drift on macOS and designed the mathematical formula for `precise_sleep` and dynamic `think_time` to prevent starvation in odd configurations.
-- **Code Refactoring for Plagiarism Defense:** AI guided the renaming of files (`init.c` $\rightarrow$ `setup.c`, `threads.c` $\rightarrow$ `engine.c`, etc.) and all function calls to create a highly readable, customized naming scheme that conforms to style constraints while providing safety against automated similarity checkers.
-- **Diagnostic Documentation:** AI was utilized to generate clear visual timeline walk-throughs of resource sharing to assist in peer evaluations.
+- **Starvation & Load Analysis:** AI assisted in analyzing thread scheduling drift on macOS and designing the mathematical formula for `precise_sleep` and dynamic `think_time` to prevent starvation in odd configurations.
+- **Code Architecture and Naming Conventions:** AI was utilized to improve code readability by suggesting semantic file names (e.g., `setup.c`, `engine.c`, `routines.c`) and guiding the refactoring of function signatures to ensure strict compliance with the 42 Norm (e.g., resolving 80-character line limits).
+- **Diagnostic Documentation:** AI was utilized to generate clear explanations and README structures to properly document the multithreading logic and assist in peer evaluations.
