@@ -1,6 +1,6 @@
 #include "philo.h"
 
-int	ft_strlen(char *str)
+int	str_length(char *str)
 {
 	int	i;
 
@@ -12,7 +12,7 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-int	ft_atoi(char *str)
+int	ascii_to_int(char *str)
 {
 	unsigned long long	nb;
 	int					sign;
@@ -40,7 +40,7 @@ int	ft_atoi(char *str)
 	return (sign * nb);
 }
 
-size_t	get_current_time(void)
+size_t	get_timestamp(void)
 {
 	struct timeval	time;
 
@@ -49,21 +49,21 @@ size_t	get_current_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-void	ft_usleep(size_t milliseconds)
+void	precise_sleep(size_t milliseconds)
 {
 	size_t	start;
 
-	start = get_current_time();
-	while ((get_current_time() - start) < milliseconds)
+	start = get_timestamp();
+	while ((get_timestamp() - start) < milliseconds)
 		usleep(500);
 }
 
-void	destory_all(char *str, t_program *program, pthread_mutex_t *forks)
+void	cleanup_resources(char *str, t_program *program, pthread_mutex_t *forks)
 {
 	int	i;
 
 	if (str)
-		write(2, str, ft_strlen(str));
+		write(2, str, str_length(str));
 	pthread_mutex_destroy(&program->write_lock);
 	pthread_mutex_destroy(&program->meal_lock);
 	pthread_mutex_destroy(&program->dead_lock);

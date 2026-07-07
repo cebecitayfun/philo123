@@ -1,6 +1,6 @@
 #include "philo.h"
 
-int	check_arg_content(char **argv)
+int	verify_input_digits(char **argv)
 {
 	int	i;
 	int	j;
@@ -20,16 +20,16 @@ int	check_arg_content(char **argv)
 	return (0);
 }
 
-int	validate_args(int argc, char **argv)
+int	parse_and_verify(int argc, char **argv)
 {
 	if (argc != 5 && argc != 6)
 		return (write(2, "Wrong argument count\n", 21), 1);
-	if (check_arg_content(argv) == 1)
+	if (verify_input_digits(argv) == 1)
 		return (write(2, "Invalid arguments\n", 18), 1);
-	if (ft_atoi(argv[1]) <= 0 || ft_atoi(argv[1]) > 200
-		|| ft_atoi(argv[2]) <= 0 || ft_atoi(argv[3]) <= 0
-		|| ft_atoi(argv[4]) <= 0
-		|| (argv[5] && ft_atoi(argv[5]) <= 0))
+	if (ascii_to_int(argv[1]) <= 0 || ascii_to_int(argv[1]) > 200
+		|| ascii_to_int(argv[2]) <= 0 || ascii_to_int(argv[3]) <= 0
+		|| ascii_to_int(argv[4]) <= 0
+		|| (argv[5] && ascii_to_int(argv[5]) <= 0))
 		return (write(2, "Invalid arguments\n", 18), 1);
 	return (0);
 }
@@ -41,19 +41,19 @@ int	main(int argc, char **argv)
 	pthread_mutex_t	forks[200];
 	int				k;
 
-	if (validate_args(argc, argv))
+	if (parse_and_verify(argc, argv))
 		return (1);
-	init_program(philos, &program);
-	init_forks(forks, ft_atoi(argv[1]));
-	init_philos(philos, &program, forks, argv);
-	program.start_time = get_current_time();
+	setup_simulation(philos, &program);
+	setup_forks(forks, ascii_to_int(argv[1]));
+	setup_philosophers(philos, &program, forks, argv);
+	program.start_time = get_timestamp();
 	k = 0;
 	while (k < program.philos[0].num_of_philos)
 	{
 		program.philos[k].last_meal = program.start_time;
 		k++;
 	}
-	create_threads(&program, forks);
-	destory_all(NULL, &program, forks);
+	launch_simulation(&program, forks);
+	cleanup_resources(NULL, &program, forks);
 	return (0);
 }

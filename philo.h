@@ -44,26 +44,26 @@ typedef struct s_program
 	t_philo			*philos;
 }					t_program;
 
-int		check_arg_content(char **argv);
-void	init_program(t_philo *philos, t_program *program);
-void	init_forks(pthread_mutex_t *forks, int philo_num);
-void	init_philos(t_philo *philos, t_program *program, pthread_mutex_t *forks,
+int		verify_input_digits(char **argv);
+void	setup_simulation(t_philo *philos, t_program *program);
+void	setup_forks(pthread_mutex_t *forks, int philo_num);
+void	setup_philosophers(t_philo *philos, t_program *program, pthread_mutex_t *forks,
 			char **argv);
 
-int		create_threads(t_program *program, pthread_mutex_t *forks);
-void	*philo_routine(void *pointer);
-void	*monitor_routine(void *pointer);
-int		check_philo_state(t_philo *philo, int *finished_eating);
+int		launch_simulation(t_program *program, pthread_mutex_t *forks);
+void	*philosopher_cycle(void *pointer);
+void	*supervisor_cycle(void *pointer);
+int		inspect_philosopher(t_philo *philo, int *finished_eating);
 
-int		check_if_dead(t_philo *philo);
-void	take_forks(t_philo *philo);
-void	eat_sleep_think(t_philo *philo);
-void	print_message(char *str, t_philo *philo, int id);
-void	ft_usleep(size_t milliseconds);
+int		is_simulation_ended(t_philo *philo);
+void	acquire_forks(t_philo *philo);
+void	run_actions(t_philo *philo);
+void	log_status(char *str, t_philo *philo, int id);
+void	precise_sleep(size_t milliseconds);
 
-int		ft_atoi(char *str);
-size_t	get_current_time(void);
-void	destory_all(char *str, t_program *program, pthread_mutex_t *forks);
-int		ft_strlen(char *str);
+int		ascii_to_int(char *str);
+size_t	get_timestamp(void);
+void	cleanup_resources(char *str, t_program *program, pthread_mutex_t *forks);
+int		str_length(char *str);
 
 #endif
